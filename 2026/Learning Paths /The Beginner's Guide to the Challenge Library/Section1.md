@@ -20,4 +20,8 @@ Once connected, the ssh session automatically ends and provides the flag automat
 `academy{s3cur3_c0nn3ct10n_eb2040c5}`
 
 # what's a net cat?
-To be completed shortly, please stand by.
+Connect to `chatelaine.cylabacademy.net` at port `17196` using netcat.
+
+Typically, this would be done using `nc chatelaine.cylabacademy.net 17196`.
+
+However, on Windows, you must type out `ncat chatelaine.cylabacademy.net 17196`. Keep this in mind for future labs where it will assume the user is on Linux and use `nc` instead of `ncat`.
