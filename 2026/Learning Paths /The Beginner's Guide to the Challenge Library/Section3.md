@@ -25,3 +25,37 @@ Seeing the continued arbitrary names, I then just used `cd` with tab complete un
 `cd Ashalmimilkala/Assurnabitashpi/Maelkashishi/Onnissiralis/Ularradallaku/`
 
 From there, `cat fang-of-haynekhtnamet.c` which gave the flag: `academy{l3v3l_up!_t4k3_4_r35t!_9d928112}`
+
+
+# Insp3ct0r
+This one splits the flag into thirds for the user to find. 
+
+The first third can be found in the page source code. The HTML holds a comment saying:
+`<!-- Html is neat. Anyways have 1/3 of the flag: academy{tru3_d3 -->`
+
+The second third can be found in the mycss.css file which is linked in the page source code. View page source and then click the file hyperlink to find it easily.
+`You need CSS to make pretty pages. Here's part 2/3 of the flag: t3ct1ve_0r_ju5t`
+
+The final third of the flag can be found in the myjs.js file which is linked in the page source code. View the page source and then click the file hyperlink to find it easily.
+`Javascript sure is neat. Anyways part 3/3 of the flag: _lucky?aa3ae7c8}`
+
+Therefore, the final flag can be pieced together as: `academy{tru3_d3t3ct1ve_0r_ju5t_lucky?aa3ae7c8}`
+
+
+# strings it
+strings it was one of the few that took me a bit of time to figure out. My initial instinct was to use `cat strings | grep "academy" ` to find it, but that didn't work.
+
+That returned `grep: (standard input): binary file matches` and there was no flags that worked properly that I could find to solve the challenge without printing the entire file.
+
+So back to square one, I attempted to then use the `strings` command. Combined with `grep`, it found the flag. So `strings strings | grep "academy"` returned the flag `academy{5tRIng5_1T_d47eAaCB}`
+
+# First Grep
+While we have used grep before, this challenge shows it being used as the base command for the first time rather than just being piped to. 
+
+`grep "academy" file` worked, highlighting the beginning of the flag amongst the rest of the giant string, making it easy to find, but it felt like there must be a way to get it on it's own. More of the intended way.
+
+The man page for `grep` shows the `-o` flag, filtering to only the parts of the file that we know. However, `grep -o "academy" file` would just filter to the word `academy` within the file, not the rest of the flag. 
+
+From a little more research, I figured out that to find an unknown string if you know the start and end of it, you can plug in .* between the two in the filter. So, the final command turns into `grep -o "academy.*} file` because the flag starts with academy and ends with a }.
+
+Making the final flag: `academy{grep_is_good_to_find_things_d00Ca181}`
