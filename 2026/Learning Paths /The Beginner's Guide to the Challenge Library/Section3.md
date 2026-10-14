@@ -59,3 +59,14 @@ The man page for `grep` shows the `-o` flag, filtering to only the parts of the 
 From a little more research, I figured out that to find an unknown string if you know the start and end of it, you can plug in .* between the two in the filter. So, the final command turns into `grep -o "academy.*} file` because the flag starts with academy and ends with a }.
 
 Making the final flag: `academy{grep_is_good_to_find_things_d00Ca181}`
+
+# Where are the robots
+The instructions for this challenge are intentionally vague, not really showing anything for the user to work off of. That actually made it quite a struggle, and my first thought was to go the the page source code and search through that for the answer.
+
+However, the page source left nothing for except a css file which was only a dead end. 
+
+My next thought was to search for subdirectories for the web page, adding `/index.html` `/index/` and eventually `/robots.txt` onto the end. I don't know if there was an easier way to find this or not, but I eventually did. This find led me to add `/47a0d.html` onto the end of my search, revealing the final flag.
+
+The flag then was `academy{ca1cu1at1ng_Mach1n3s_47a0d}`
+
+I feel like this one should have told you to search for a .txt file or something, it didn't seem to have a clear direction. I could have pulled out all of the web penetration testing tools I've used from PortSwigger labs, but I wanted to keep with only the intentional way of doing the challenge.
