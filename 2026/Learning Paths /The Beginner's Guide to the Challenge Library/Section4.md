@@ -272,3 +272,125 @@ That looks like a lot, but the only difference between this function and the las
 Running that new script, we get the final flag `academy{fl45h_5pr1ng1ng_f8cf5d9c}`
 
 # PW Crack 5
+PW Crack 5 adds an entire dictionary.txt file in that has the password list. Way too much to do manually now, if for some reason you chose to do it manually before. 
+
+So, let's take a look at the original code and work from there:
+```
+import hashlib
+
+### THIS FUNCTION WILL NOT HELP YOU FIND THE FLAG --LT ########################
+def str_xor(secret, key):
+    #extend key to secret length
+    new_key = key
+    i = 0
+    while len(new_key) < len(secret):
+        new_key = new_key + key[i]
+        i = (i + 1) % len(key)        
+    return "".join([chr(ord(secret_c) ^ ord(new_key_c)) for (secret_c,new_key_c) in zip(secret,new_key)])
+###############################################################################
+
+flag_enc = open('level5.flag.txt.enc', 'rb').read()
+correct_pw_hash = open('level5.hash.bin', 'rb').read()
+
+
+def hash_pw(pw_str):
+    pw_bytes = bytearray()
+    pw_bytes.extend(pw_str.encode())
+    m = hashlib.md5()
+    m.update(pw_bytes)
+    return m.digest()
+
+
+def level_5_pw_check():
+    user_pw = input("Please enter correct password for flag: ")
+    user_pw_hash = hash_pw(user_pw)
+    
+    if( user_pw_hash == correct_pw_hash ):
+        print("Welcome back... your flag, user:")
+        decryption = str_xor(flag_enc.decode(), user_pw)
+        print(decryption)
+        return
+    print("That password is incorrect")
+
+
+
+level_5_pw_check()
+```
+Very similar to before, but as expected it is using the password list and comparing it to hashes. The only important part is that `def level_5_pw_check()` function. 
+
+We'd want to change as little as possible from this function, so we essentially want to just make it read the dictionary file and I'll have it load that into a list to be used the same way the previous CTFs did.
+```
+def level_5_pw_check():
+    pos_pw_list = []
+    with open("dictionary.txt", "r", encoding="utf-8") as file:
+        for line in file:
+                cleanline = line.rstrip("\n")
+                pos_pw_list.append(cleanline)
+
+        for user_pw in pos_pw_list:
+            user_pw_hash = hash_pw(user_pw)
+
+            if user_pw_hash == correct_pw_hash:
+                print("Correct password:", user_pw)
+                print("Welcome back... your flag, user:")
+
+                decryption = str_xor(flag_enc.decode(), user_pw)
+                print(decryption)
+                return
+```
+Let's break it down a little bit more. The `pos_pw_list = []` just creates an empty list that can be used for the function. As we add things to that list, it will be filled in, but it will all remain "in memory" meaning every time the code executes it will have to reload the list from the .txt file.
+
+That `with open...` function essentially loads the `dictionary.txt` file in and takes line by line, loading each one into the `pos_pw_list` list we made before. Pretty straightforward.
+
+Then, the `for user_pw in pos_pw_list` loop is exactly the same as before, loading each item from that `pos_pw_list` and trying them as passwords.
+
+So then the complete file would become:
+```
+import hashlib
+
+### THIS FUNCTION WILL NOT HELP YOU FIND THE FLAG --LT ########################
+def str_xor(secret, key):
+    #extend key to secret length
+    new_key = key
+    i = 0
+    while len(new_key) < len(secret):
+        new_key = new_key + key[i]
+        i = (i + 1) % len(key)        
+    return "".join([chr(ord(secret_c) ^ ord(new_key_c)) for (secret_c,new_key_c) in zip(secret,new_key)])
+###############################################################################
+
+flag_enc = open('level5.flag.txt.enc', 'rb').read()
+correct_pw_hash = open('level5.hash.bin', 'rb').read()
+
+
+def hash_pw(pw_str):
+    pw_bytes = bytearray()
+    pw_bytes.extend(pw_str.encode())
+    m = hashlib.md5()
+    m.update(pw_bytes)
+    return m.digest()
+
+
+def level_5_pw_check():
+    pos_pw_list = []
+    with open("dictionary.txt", "r", encoding="utf-8") as file:
+        for line in file:
+                cleanline = line.rstrip("\n")
+                pos_pw_list.append(cleanline)
+
+        for user_pw in pos_pw_list:
+            user_pw_hash = hash_pw(user_pw)
+
+            if user_pw_hash == correct_pw_hash:
+                print("Correct password:", user_pw)
+                print("Welcome back... your flag, user:")
+
+                decryption = str_xor(flag_enc.decode(), user_pw)
+                print(decryption)
+                return
+
+
+
+level_5_pw_check()
+```
+Which gives you the final flag `academy{h45h_sl1ng1ng_27d64792}`
