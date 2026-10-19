@@ -1,4 +1,4 @@
-# Section 1
+# Problem Set 1
 
 # Lets Warm Up
 The challenge just asks you to convert Hexidecimal to ASCI. 

@@ -1,4 +1,4 @@
-# Section 2
+# Problem Set 2
 
 # Obedient Cat
 The flag is hidden in plain sight for anyone to see inside of the file.

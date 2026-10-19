@@ -24,7 +24,7 @@ Seeing the continued arbitrary names, I then just used `cd` with tab complete un
 
 `cd Ashalmimilkala/Assurnabitashpi/Maelkashishi/Onnissiralis/Ularradallaku/`
 
-From there, `cat fang-of-haynekhtnamet.c` which gave the flag: `academy{l3v3l_up!_t4k3_4_r35t!_9d928112}`
+From there, `cat fang-of-haynekhtnamet.c` which gave the flag: `academy{l3v3l_up!_t4k3_4_r35t!_9d928112}`.
 
 
 # Insp3ct0r
