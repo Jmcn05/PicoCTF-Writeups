@@ -1,0 +1,57 @@
+# Safe Opener 2
+Turns out to be very simple, but it didn't have to be.
+
+This challenge asks the user to find the password using the provided file once again, however this time it uses a `.class` file. `.class` files are files for Java code which are compiled to run.
+
+My first thought would be just to see what's inside with `cat` which provided a large output that makes the file very difficult to read, however everything we need is written in plaintext.
+```
+����4�
+CDE     FG
+H
+I
+JL      FN
+OP
+Q
+RS
+.T
+OU
+VW
+X
+Y
+[
+]
+R`ab<init>()VCodeLineNumberTableLocalVariableTablethis
+                                                      LSafeOpener;main([Ljava/lang/String;)VisOpenZargs[Ljava/lang/StringkeyboardLjava/io/BufferedReader;encodercEncoder
+                    InnerClasses␦Ljava/util/Base64$Encoder;
+StackMapTable*Dcdang/String;keyiI
+ExceptionsopenSafe(Ljava/lang/String;)password
+SourceFileSafeOpener.java
+                         java/io/BufferedReaderjava/io/InputStreamReaderf
+                                                                         gh
+                                                                           i
+                                                                            jk
+                                                                              lm
+                                                                                noEnter password for the safe: p
+                                                                                                                qr
+                                                                                                                  std
+                                                                                                                     uv
+                                                                                                                       wx
+                                                                                                                         yr
+                                                                                                                           >?java/lang/StringBuilder
+You have
+          z{
+            z| attempt(s) left
+                              }t,academy{SAf3_0p3n3rr_y0u_solv3d_it_87a1d928}
+                                                                             ~
+                                                                              Sesame openPassword is incorrect
+
+SafeOpenerjava/lang/Objectjava/util/Base64$Encoderjava/lang/Stringjava/io/IOExceptionjava/lang/SysteminLjava/io/InputStream;(Ljava/io/InputStream;)V(Ljava/io/Reader;)Vjava/util/Base64
+getEncoder()Ljava/util/Base64$Encoder;outLjava/io/PrintStream;java/io/PrintStreamprint(Ljava/lang/String;)readLine()Ljava/lang/StringgetBytes()[BencodeToString([B)Ljava/lang/String;printlnappend-(Ljava/lang/String;)Ljava/lang/StringBuilder;(I)Ljava/lang/StringBuildertoStringequals(Ljava/lang/Object;)Z! /*��!"
+              #$        %& <x�Y�Y���L�:6�T�
+�
+ +�
+�.4>EKPq␦���K,'(�!␦!+,b-1_23[43 X567� 89:;;�V<= >? uL*+��
+                    "#&'"@323�;AB0
+.J/     
+```
+We can ignore almost all of this, because the flag is written in the middle of the file for us to find. The flag is written in the code as `academy{SAf3_0p3n3rr_y0u_solv3d_it_87a1d928}`.

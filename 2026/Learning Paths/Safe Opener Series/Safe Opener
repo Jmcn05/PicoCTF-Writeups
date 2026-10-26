@@ -1,0 +1,54 @@
+# Safe Opener
+There are no sections in this Learing Path, just two challenges. This one provides a `.java` file which can be viewed with `cat`.
+```
+import java.io.*;
+import java.util.*;
+public class SafeOpener {
+    public static void main(String args[]) throws IOException {
+        BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
+        Base64.Encoder encoder = Base64.getEncoder();
+        String encodedkey = "";
+        String key = "";
+        int i = 0;
+        boolean isOpen;
+
+
+        while (i < 3) {
+            System.out.print("Enter password for the safe: ");
+            key = keyboard.readLine();
+
+            encodedkey = encoder.encodeToString(key.getBytes());
+            System.out.println(encodedkey);
+
+            isOpen = openSafe(encodedkey);
+            if (!isOpen) {
+                System.out.println("You have  " + (2 - i) + " attempt(s) left");
+                i++;
+                continue;
+            }
+            break;
+        }
+    }
+
+    public static boolean openSafe(String password) {
+        String encodedkey = "cGwzYXMzX2wzdF9tM18xbnQwX3RoM19zYWYz";
+
+        if (password.equals(encodedkey)) {
+            System.out.println("Sesame open");
+            return true;
+        }
+        else {
+            System.out.println("Password is incorrect\n");
+            return false;
+        }
+    }
+```
+The challenge asks you to find the password based on the code. Well, the first thing that stands out is the `encodedKey = "cGwzYXMzX2wzdF9tM18xbnQwX3RoM19zYWYz"` line. Based on the lines shortly after, this string is the password, just encrypted.
+
+The first few lines of the file tell how it's been encrypted. Specifically, this line `Base64.Encoder encoder = Base64.getEncoder()` shows that it is using a `Base64` encoding to hide the password while still being in plaintext. 
+
+Switching back over to our Linux terminal, this means we can run `echo -n "cGwzYXMzX2wzdF9tM18xbnQwX3RoM19zYWYz" | base64 -d` 
+
+This command puts the encoded key through the base64 decoding function built into Linux terminals.
+
+This provides the output `pl3as3_l3t_m3_1nt0_th3_saf3` which when put into the right format creates the final flag of `academy{pl3as3_l3t_m3_1nt0_th3_saf3}`
